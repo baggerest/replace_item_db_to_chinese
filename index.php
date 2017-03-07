@@ -1,11 +1,12 @@
 <?php
 header("Content-Type:text/html;charset=big5");
-
+$time1 = time();
 $tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
 $language_itemdb = get_itemdb_list("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
-foreach (from_item_db($tag_itemdb,$language_itemdb) as $i => $item){
+foreach (from_itemdb($tag_itemdb,$language_itemdb) as $i => $item){
     foreach ($item as $j => $value){
-        echo "[{$value}]";
+        echo ($j<19)?"{$value}":"{{$value}}";
+        echo ($j<21)?",":"";
     }
     echo "<br>";
 }
@@ -33,7 +34,7 @@ function get_itemdb_list($input_itemdb_path){
     return $itemdb_list;
 }
 
-function from_item_db($input_itemdb_list,$input_itemdb_language){
+function from_itemdb($input_itemdb_list,$input_itemdb_language){
     error_reporting(0);
     $itemdb_cht_list_output = null;
     foreach($input_itemdb_list as $id => $value){
