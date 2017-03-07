@@ -1,7 +1,6 @@
 <?php
 header("Content-Type:text/html;charset=big5");
-$time1 = time();
-$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
+/*$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
 $language_itemdb = get_itemdb_list("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
 foreach (from_itemdb($tag_itemdb,$language_itemdb) as $i => $item){
     foreach ($item as $j => $value){
@@ -9,12 +8,12 @@ foreach (from_itemdb($tag_itemdb,$language_itemdb) as $i => $item){
         echo ($j<21)?",":"";
     }
     echo "<br>";
-}
+}*/
 
-function get_itemdb_list($input_itemdb_path){
+function get_itemdb_list($input_itemdb_file_path){
     // 22 counts:1 array
     // file add everyone account
-    $itemdb = file($input_itemdb_path,FILE_IGNORE_NEW_LINES);
+    $itemdb = file($input_itemdb_file_path,FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
     $itemdb_list = null;
     foreach ($itemdb as $line){
         if(strpos($line,'//')===0){
@@ -31,10 +30,11 @@ function get_itemdb_list($input_itemdb_path){
             }
         }
     }
+    // return array
     return $itemdb_list;
 }
 
-function from_itemdb($input_itemdb_list,$input_itemdb_language){
+function from_itemdb($input_itemdb_list = array(),$input_itemdb_language = array()){
     error_reporting(0);
     $itemdb_cht_list_output = null;
     foreach($input_itemdb_list as $id => $value){
@@ -53,9 +53,30 @@ function from_itemdb($input_itemdb_list,$input_itemdb_language){
             }
         }
     }
+    // return array
     return $itemdb_cht_list_output;
 }
 
-function from_idnum2itemdisplaynametable(){
+function get_idnum2itemdisplaynametable_list($input_idnum2itemdisplaynametable_file_path){
+    $idnum2itemdisplaynametable = file($input_idnum2itemdisplaynametable_file_path,FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
+    $idnum2itemdisplaynametable_list = null;
+    foreach ($idnum2itemdisplaynametable as $value){
+        if(strpos($value,'//')===0){
+            continue;
+        }else{
 
+        }
+    }
+
+
+
+    // return array
+}
+
+$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
+$idnum2itemdisplaynametable_language = get_idnum2itemdisplaynametable_list("D:\\downloaded\\data\\idnum2itemdisplaynametable.txt");
+
+function from_idnum2itemdisplaynametable($tag_itemdb = array(),$idnum2itemdisplaynametable_language = array()){
+
+    // return array
 }
