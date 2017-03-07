@@ -1,55 +1,60 @@
 <?php
 header("Content-Type:text/html;charset=big5");
-item_db_read();
 
-function item_db_read(){
-    // 22項目:1陣列
-    $itemdb_en = file("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
-    $itemdb_en_list = null;
-    foreach ($itemdb_en as $line){
+$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
+$language_itemdb = get_itemdb_list("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
+foreach (from_item_db($tag_itemdb,$language_itemdb) as $i => $item){
+    foreach ($item as $j => $value){
+        echo "[{$value}]";
+    }
+    echo "<br>";
+}
+
+function get_itemdb_list($input_itemdb_path){
+    // 22 counts:1 array
+    // file add everyone account
+    $itemdb = file($input_itemdb_path,FILE_IGNORE_NEW_LINES);
+    $itemdb_list = null;
+    foreach ($itemdb as $line){
         if(strpos($line,'//')===0){
             continue;
         }else{
             $p_pre = substr($line,0,strpos($line,',{'));
             $list_id = explode(',',$p_pre)[0];
-            $itemdb_en_list[$list_id] = explode(',',$p_pre);
+            $itemdb_list[$list_id] = explode(',',$p_pre);
 
-            $p_end = substr($line,strpos($line,',{')+2,-3);
+            $pd = substr($line,strpos($line,',{')+2,-1);
             $i = 19;
-            foreach (explode('},{',$p_end) as $value){
-                $itemdb_en_list[$list_id][$i++] = $value;
+            foreach (explode('},{',$pd) as $value){
+                $itemdb_list[$list_id][$i++] = $value;
             }
         }
     }
+    return $itemdb_list;
+}
 
-    $itemdb_cht = file("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
-    $itemdb_cht_list = null;
-    foreach ($itemdb_cht as $line){
-        if(strpos($line,'//')===0){
-            continue;
-        }else{
-            $p_pre = substr($line,0,strpos($line,',{'));
-            $list_id = explode(',',$p_pre)[0];
-            $itemdb_cht_list[$list_id] = explode(',',$p_pre);
-
-            $p_end = substr($line,strpos($line,',{')+2,-3);
-            $i = 19;
-            foreach (explode('},{',$p_end) as $value){
-                $itemdb_cht_list[$list_id][$i++] = $value;
-            }
-        }
-    }
-
+function from_item_db($input_itemdb_list,$input_itemdb_language){
     error_reporting(0);
-    for($id=0;$id<40000;$id++){
-        if($itemdb_en_list[$id]===null)continue;
-        foreach ($itemdb_en_list[$id] as $item){
-            echo "<font style=\"background-color:#00ffff\">{{$item}}</font>";
+    $itemdb_cht_list_output = null;
+    foreach($input_itemdb_list as $id => $value){
+        if($input_itemdb_language[$id]===null){
+            $itemdb_cht_list_output[$id] = $input_itemdb_list[$id];
+        }else {
+            foreach ($input_itemdb_list[$id] as $key => $item) {
+                switch ($key) {
+                    case 2:
+                        $itemdb_cht_list_output[$id][$key] = $input_itemdb_language[$id][$key];
+                        break;
+                    default:
+                        $itemdb_cht_list_output[$id][$key] = $input_itemdb_list[$id][$key];
+                        break;
+                }
+            }
         }
-        echo "<br>";
-        foreach ($itemdb_cht_list[$id] as $item){
-            echo "{{$item}}";
-        }
-        echo "<br>";
     }
+    return $itemdb_cht_list_output;
+}
+
+function from_idnum2itemdisplaynametable(){
+
 }
