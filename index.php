@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Zachary
- * Date: 2017/3/6
- * Time: 上午 10:19
- */
-//22個
 header("Content-Type:text/html;charset=big5");
+item_db_read();
 
 function item_db_read(){
-    $itemdb_en = file("D:/GitHub/rathena/db/re/item_db.txt");
+    // 22項目:1陣列
+    $itemdb_en = file("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
     $itemdb_en_list = null;
     foreach ($itemdb_en as $line){
         if(strpos($line,'//')===0){
@@ -27,7 +22,7 @@ function item_db_read(){
         }
     }
 
-    $itemdb_cht = file("D:/item_db.txt");
+    $itemdb_cht = file("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
     $itemdb_cht_list = null;
     foreach ($itemdb_cht as $line){
         if(strpos($line,'//')===0){
