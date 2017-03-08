@@ -1,12 +1,18 @@
 <?php
 header("Content-Type:text/html;charset=big5");
-//$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
-//$language_itemdb = get_itemdb_list("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
+/*$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
+$language_itemdb = get_itemdb_list("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
+foreach (from_itemdb($tag_itemdb,$language_itemdb) as $i => $item){
+    foreach ($item as $j => $value){
+        if($j===0)echo $a++.")";
+        echo ($j<19)?"{$value}":"{{$value}}";
+        echo ($j<21)?",":"";
+    }
+    echo "<br>";
+}*/
 
-//$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
-//$language_idnum2itemdisplaynametable = get_idnum2itemdisplaynametable_list("D:\\downloaded\\data\\idnum2itemdisplaynametable.txt");
-
-/*
+/*$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
+$language_idnum2itemdisplaynametable = get_idnum2itemdisplaynametable_list("D:\\downloaded\\data\\idnum2itemdisplaynametable.txt");
 foreach (from_idnum2itemdisplaynametable($tag_itemdb,$language_idnum2itemdisplaynametable) as $i => $item){
     foreach ($item as $j => $value){
         if($j===0)echo $a++.")";
@@ -16,6 +22,10 @@ foreach (from_idnum2itemdisplaynametable($tag_itemdb,$language_idnum2itemdisplay
     echo "<br>";
 }
 */
+
+function isCh($input_string){
+    return preg_match("/[\x{4e00}-\x{9fa5}]/u", $input_string);
+}
 
 function get_itemdb_list($input_itemdb_file_path){
     // 22 counts:1 array
