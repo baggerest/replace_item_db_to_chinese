@@ -1,36 +1,12 @@
 <?php
-header("Content-Type:text/html;charset=utf8");
-//$begin = hexdec("4e00");
-//$end = hexdec("9fa5");
-
-/*$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
-$language_itemdb = get_itemdb_list("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
-foreach (from_itemdb($tag_itemdb,$language_itemdb) as $i => $item){
-    foreach ($item as $j => $value){
-        if($j===0)echo $a++.")";
-        echo ($j<19)?"{$value}":"{{$value}}";
-        echo ($j<21)?",":"";
-    }
-    echo "<br>";
-}*/
-
-/*$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
-$language_idnum2itemdisplaynametable = get_idnum2itemdisplaynametable_list("D:\\downloaded\\data\\idnum2itemdisplaynametable.txt");
-foreach (from_idnum2itemdisplaynametable($tag_itemdb,$language_idnum2itemdisplaynametable) as $i => $item){
-    foreach ($item as $j => $value){
-        if($j===0)echo $a++.")";
-        echo ($j<19)?"{$value}":"{{$value}}";
-        echo ($j<21)?",":"";
-    }
-    echo "<br>";
-}
-*/
-function unicode_to_ch($data = 'array | string'){
+function unicode_to_ch($data = ' ["\u****"] '){
+    //return chinese
     return json_decode($data)[0];
 }
 
 function ch_to_unicode($data = 'array | string'){
-    return ' ['.json_encode($data).'] ';
+    //return ' ["\u****"] '
+    return '['.json_encode($data).']';
 }
 
 function isCh($input_string){
@@ -57,7 +33,7 @@ function get_itemdb_list($input_itemdb_file_path){
             }
         }
     }
-    // return array
+    // return array[][21]
     return $itemdb_list;
 }
 
@@ -72,10 +48,21 @@ function get_idnum2itemdisplaynametable_list($input_idnum2itemdisplaynametable_f
             $idnum2itemdisplaynametable_changed_list_output[] = explode('#',$substr_list);
         }
     }
-    // return array
+    // return array[][1]
     return $idnum2itemdisplaynametable_changed_list_output;
 }
 
+
+//$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
+//$language_itemdb = get_itemdb_list("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
+//foreach (from_itemdb($tag_itemdb,$language_itemdb) as $i => $item){
+//    foreach ($item as $j => $value){
+//        if($j===0)echo $a++.")";
+//        echo ($j<19)?"{$value}":"{{$value}}";
+//        echo ($j<21)?",":"";
+//    }
+//    echo "<br>";
+//}
 function from_itemdb($input_itemdb_list = array(),$input_itemdb_language_list = array()){
     error_reporting(0);
     $itemdb_changed_list_output = null;
@@ -95,10 +82,20 @@ function from_itemdb($input_itemdb_list = array(),$input_itemdb_language_list = 
             }
         }
     }
-    // return array
+    // return array[][21]
     return $itemdb_changed_list_output;
 }
 
+//$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
+//$language_idnum2itemdisplaynametable = get_idnum2itemdisplaynametable_list("D:\\downloaded\\data\\idnum2itemdisplaynametable.txt");
+//foreach (from_idnum2itemdisplaynametable($tag_itemdb,$language_idnum2itemdisplaynametable) as $i => $item){
+//    foreach ($item as $j => $value){
+//        if($j===0)echo $a++.")";
+//        echo ($j<19)?"{$value}":"{{$value}}";
+//        echo ($j<21)?",":"";
+//    }
+//    echo "<br>";
+//}
 function from_idnum2itemdisplaynametable($input_itemdb_list = array(),$input_idnum2itemdisplaynametable_language_list = array()){
     error_reporting(0);
     $itemdb_changed_list_output = null;
@@ -118,6 +115,6 @@ function from_idnum2itemdisplaynametable($input_itemdb_list = array(),$input_idn
             }
         }
     }
-    // return array
+    // return array[][21]
     return $itemdb_changed_list_output;
 }
