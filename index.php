@@ -1,5 +1,21 @@
 <?php
-header("Content-Type:text/html;charset=big5");
+header("Content-Type:text/html;charset=utf8");
+$begin = hexdec("4e00");
+$end = hexdec("9fa5");
+$a = ' ["' ;
+for ($i = $begin; $i <= $end; $i ++) {
+    $a .= '\u' . dechex ($i);
+}
+$a .= '"] ' ;
+$b = json_decode($a);
+print_r($b[0]);
+
+//Use urlencode to workaround for json_encode without JSON_UNESCAPED_UNICODE
+
+$data = "惡";
+$json = json_encode($data,JSON_FORCE_OBJECT);
+echo $json;
+
 /*$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
 $language_itemdb = get_itemdb_list("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
 foreach (from_itemdb($tag_itemdb,$language_itemdb) as $i => $item){
