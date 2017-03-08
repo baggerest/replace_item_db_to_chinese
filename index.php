@@ -8,13 +8,7 @@ for ($i = $begin; $i <= $end; $i ++) {
 }
 $a .= '"] ' ;
 $b = json_decode($a);
-print_r($b[0]);
-
-//Use urlencode to workaround for json_encode without JSON_UNESCAPED_UNICODE
-
-$data = "惡";
-$json = json_encode($data,JSON_FORCE_OBJECT);
-echo $json;
+echo $b[0];
 
 /*$tag_itemdb = get_itemdb_list("D:\\GitHub\\rathena\\db\\re\\item_db.txt");
 $language_itemdb = get_itemdb_list("D:\\downloaded\\rAthenaCN_cht\\db\\re\\item_db.txt");
@@ -38,6 +32,10 @@ foreach (from_idnum2itemdisplaynametable($tag_itemdb,$language_idnum2itemdisplay
     echo "<br>";
 }
 */
+
+function ch_to_unicode($data = 'array | string'){
+    return json_encode($data,JSON_FORCE_OBJECT);
+}
 
 function isCh($input_string){
     return preg_match("/[\x{4e00}-\x{9fa5}]/u", $input_string);
