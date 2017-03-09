@@ -7,14 +7,16 @@ function unicode_to_ch($data = '["\u****"]'){
 }
 
 function ch_to_unicode($data = 'array | string'){
-    //return ' ["\u****"] '
+    //return '["\u****"]'
     return '['.json_encode($data).']';
 }
 
 function isCh($input_string){
+    // return 1:0
     return preg_match("/[\x{4e00}-\x{9fa5}]/u", $input_string);
 }
 
+// to utf8 frist
 function get_itemdb_list($input_itemdb_file_path){
     // 22 counts:1 array
     // file add everyone account
@@ -39,6 +41,7 @@ function get_itemdb_list($input_itemdb_file_path){
     return $itemdb_list;
 }
 
+// to utf8 frist
 function get_idnum2itemdisplaynametable_list($input_idnum2itemdisplaynametable_file_path){
     $idnum2itemdisplaynametable_changed_list_output = null;
     $idnum2itemdisplaynametable = file($input_idnum2itemdisplaynametable_file_path,FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
@@ -119,4 +122,21 @@ function from_idnum2itemdisplaynametable($input_itemdb_list = array(),$input_idn
     }
     // return array[][21]
     return $itemdb_changed_list_output;
+}
+
+// output utf8 frist
+function output_itemdb_file($input_item_db = array(),$output_path = ""){
+    $save_file = fopen($output_path,'w');
+    $title = "// ID,AegisName,Name,Type,Buy,Sell,Weight,ATK[:MATK],DEF,Range,Slots,Job,Class,Gender,Loc,wLV,eLV[:maxLevel],Refineable,View,{ Script },{ OnEquip_Script },{ OnUnequip_Script }\r\n";
+    fwrite($save_file,$title);
+    foreach ($input_item_db as $id => $item){
+        $line_words = null;
+        foreach ($input_item_db[$id] as $key => $value){
+            $line_words .= ($key<19)?"{$value}":"{{$value}}";
+            $line_words .= ($key<21)?",":"\r\n";
+        }
+        fwrite($save_file,$line_words);
+    }
+    fclose($save_file);
+    return true;
 }
