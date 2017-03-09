@@ -1,7 +1,7 @@
 <?php
 header("Content-Type:text/html; charset=utf-8");
 
-function unicode_to_ch($data = ' ["\u****"] '){
+function unicode_to_ch($data = '["\u****"]'){
     //return chinese
     return json_decode($data)[0];
 }
