@@ -1,6 +1,17 @@
 <?php
 header("Content-Type:text/html; charset=utf-8");
 
+$tag_itemdb = get_itemdb_list("E:\\rathena\\db\\re\\item_db.txt");
+$language_itemdb = get_itemdb_list("E:\\rAthenaCN1.5.9_cht\\db\\re\\item_db.txt");
+$itemdb_out_list = from_itemdb($tag_itemdb,$language_itemdb);
+if(output_itemdb_file($itemdb_out_list,"D:\\item_db.txt")){
+    echo "完成";
+    foreach ($itemdb_out_list as $id => $value){
+        $w = $itemdb_out_list[$id][2];
+        echo "[".$w.":".isCh($w)."]";
+    }
+}
+
 function unicode_to_ch($data = '["\u****"]'){
     //return chinese
     return json_decode($data)[0];
@@ -26,6 +37,7 @@ function get_itemdb_list($input_itemdb_file_path){
         if(strpos($line,'//')===0){
             continue;
         }else{
+            $line = mb_convert_encoding($line,'utf-8','big5,gb2312');
             $p_pre = substr($line,0,strpos($line,',{'));
             $list_id = explode(',',$p_pre)[0];
             $itemdb_list[$list_id] = explode(',',$p_pre);
@@ -49,6 +61,7 @@ function get_idnum2itemdisplaynametable_list($input_idnum2itemdisplaynametable_f
         if(strpos($value,'//')===0){
             continue;
         }else{
+            $value = mb_convert_encoding($value,'utf-8','big5,gb2312');
             $substr_list = substr($value,0,-1);
             $idnum2itemdisplaynametable_changed_list_output[] = explode('#',$substr_list);
         }
