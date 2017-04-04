@@ -296,4 +296,5 @@ function change_mobs_name_from_monster_list($input_mobs_file_list = array(),$inp
         $change_mobs_list = null;
     }
 }
+//change_mobs_name_from_monster_list(get_mobs_file_list("C:\\my\\rathena\\npc\\mobs\\"),get_monsters_list("D:\\OpenKoreTW20170328\\tables\\twRO\\monsters.txt"));
 //change_mobs_name_from_monster_list(get_mobs_file_list("C:\\my\\rathena\\npc\\re\\mobs\\"),get_monsters_list("D:\\OpenKoreTW20170328\\tables\\twRO\\monsters.txt"));
